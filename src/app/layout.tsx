@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="light">
-      <body className={cn("bg-neutral-50", satoshi.className)}>
+      <body className={cn("bg-neutral-50 scroll-smooth", satoshi.className)}>
         <Navbar />
         {children}
         <Footer />

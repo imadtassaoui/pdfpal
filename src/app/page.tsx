@@ -15,13 +15,27 @@ import chat from "@/assets/icons/chat.svg";
 import Button from "@/components/ui/Button";
 import arrow from "@/assets/icons/arrow-right.svg";
 import PricingCard from "@/components/PricingCard";
+import speech from "@/assets/speech.png";
+import sparkles from "@/assets/sparkles.png";
 
 export default function Home() {
   return (
     <MaxWidthWrapper className="bg-red-400">
       <section className="flex flex-col items-center mt-[192px] mb-12">
         <h1 className="mb-5 font-bold text-4xl text-center md:text-7xl lg:text-8xl lg:tracking-[-4.8px] lg:leading-[95%] lg:max-w-5xl">
-          Chat 💬 with your documents using Ai ✨.
+          Chat{" "}
+          <Image
+            className="inline w-8 md:w-16 lg:w-24 "
+            src={speech}
+            alt="speech"
+          />{" "}
+          with your documents using Ai
+          <Image
+            className="inline w-8 md:w-16 lg:w-24"
+            src={sparkles}
+            alt="sparkles"
+          />
+          .
         </h1>
         <p className="mb-8 text-center lg:max-w-2xl">
           PdPal allows you to have conversations with any PDF document. Simply
@@ -31,7 +45,9 @@ export default function Home() {
           <Button>
             Get started <Image src={arrow} alt="arrow-icon" />{" "}
           </Button>
-          <Button variant="secondary">How does it work?</Button>
+          <Link href="#onboarding">
+            <Button variant="secondary">How does it work?</Button>
+          </Link>
         </div>
         <Image
           className="rounded-xl w-full shadow-xl border border-neutral-300 max-w-screen-lg"
@@ -39,7 +55,10 @@ export default function Home() {
           alt="app-mockup"
         />
       </section>
-      <section className="py-12 lg:py-24 flex flex-col items-center gap-12 lg:gap-24">
+      <section
+        id="onboarding"
+        className="py-12  lg:py-24 flex flex-col items-center gap-12 lg:gap-24"
+      >
         <div className="flex flex-col items-center">
           <Label className="mb-4">Onboarding</Label>
           <p className="font-bold text-3xl lg:text-6xl">How does it work?</p>
