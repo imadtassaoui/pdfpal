@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 const satoshi = localFont({ src: "../fonts/Satoshi-Variable.ttf" });
 
@@ -19,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="light">
       <body className={cn("bg-neutral-50", satoshi.className)}>
+        <Navbar />
         {children}
         <Footer />
       </body>
