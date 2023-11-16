@@ -10,7 +10,7 @@ const Label: FC<LabelProps> = ({ className, children }) => {
   return (
     <h2
       className={cn(
-        "text-primary font-bold uppercase text-xs tracking-[2.4px] ",
+        "text-primary font-black uppercase text-xs tracking-[2.4px] ",
         className
       )}
     >

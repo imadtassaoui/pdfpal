@@ -3,6 +3,7 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import Link from "next/link";
 import Image from "next/image";
 import appMockup from "@/assets/app-mockup.jpg";
+import chatMockup from "@/assets/chat-mockup.jpg";
 import Label from "@/components/ui/Label";
 
 import Card from "@/components/ui/Card";
@@ -13,6 +14,7 @@ import upload from "@/assets/icons/upload.svg";
 import chat from "@/assets/icons/chat.svg";
 import Button from "@/components/ui/Button";
 import arrow from "@/assets/icons/arrow-right.svg";
+import PricingCard from "@/components/PricingCard";
 
 export default function Home() {
   return (
@@ -37,10 +39,10 @@ export default function Home() {
           alt="app-mockup"
         />
       </section>
-      <section className="py-12 flex flex-col items-center gap-8">
+      <section className="py-12 lg:py-24 flex flex-col items-center gap-12 lg:gap-24">
         <div className="flex flex-col items-center">
           <Label className="mb-4">Onboarding</Label>
-          <p className="font-bold text-3xl">How does it work?</p>
+          <p className="font-bold text-3xl lg:text-6xl">How does it work?</p>
         </div>
         <div className="flex flex-col gap-8 max-w-[868px]">
           <div className="flex flex-col gap-8 md:flex-row">
@@ -72,7 +74,7 @@ export default function Home() {
               </div>
             </Card>
           </div>
-          <Card className="bg-primary">
+          <Card className="bg-primary relative overflow-hidden ">
             <Image src={chat} alt="user" />
             <div className="flex flex-col gap-4 max-w-sm items-start">
               <h3 className="font-bold text-white text-2xl">
@@ -83,16 +85,25 @@ export default function Home() {
                 less than a minute.
               </p>
               <Button variant="tertiary">Get started</Button>
+              <Image
+                className="hidden md:block absolute right-0 rounded-s-xl top-20 object-cover w-auto h-full shadow-2xl"
+                src={chatMockup}
+                alt="chat-mockup"
+              />
             </div>
           </Card>
         </div>
       </section>
-      <section className="py-12 flex flex-col items-center ">
-        <div className="flex flex-col items-center">
+      <section className="py-12 lg:py-24 flex flex-col items-center gap-24">
+        <div className="flex flex-col items-center ">
           <Label className="mb-4">Pricing</Label>
-          <p className="font-bold text-3xl text-center">
+          <p className="font-bold text-3xl text-center lg:text-6xl">
             Choose the right plan for your usage.
           </p>
+        </div>
+        <div className="flex gap-8 flex-col md:flex-row ">
+          <PricingCard type="free" />
+          <PricingCard type="pro" price={14} previousPrice="20" />
         </div>
       </section>
     </MaxWidthWrapper>

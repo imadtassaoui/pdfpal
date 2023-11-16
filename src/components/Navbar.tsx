@@ -17,15 +17,19 @@ const Navbar: FC<NavbarProps> = ({}) => {
   useEffect(() => {
     if (size.width && size.width > 768) {
       toggleNav(true);
+    } else if (size.width && size.width < 768) {
+      toggleNav(false);
     }
   }, [size]);
   return (
     <header
-      className={`w-full absolute px-4 top-0 h-72 pt-8 left-0 flex md:flex-row items-start justify-between lg:px-20 ${
-        navbar && "bg-white md:bg-transparent"
+      className={`w-full absolute px-4 top-0  pt-8 left-0 flex md:flex-row items-start justify-between lg:px-20 ${
+        navbar && "bg-white md:bg-transparent md:h-auto h-72 "
       }`}
     >
-      <Image src={logo} alt="logo" className="w-8 md:w-auto" />
+      <Link href="/">
+        <Image src={logo} alt="logo" className="w-8 md:w-auto" />
+      </Link>
 
       <nav className="flex flex-col relative items-start gap-2 justify-end md:gap-10">
         <Image
@@ -36,7 +40,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
         />
         {navbar && (
           <ul className="flex flex-col gap-4 items-end w-[120px] md:w-auto absolute top-12  right-0 md:relative md:top-0 md:flex-row md:items-center md:gap-10">
-            <Link className="font-bold" href="/">
+            <Link className="font-bold" href="/pricing">
               {" "}
               Pricing
             </Link>
