@@ -13,7 +13,7 @@ interface SidebarProps {}
 
 const Sidebar: FC<SidebarProps> = ({}) => {
   return (
-    <aside className="relative w-[243px] h-full bg-neutral-50 border-r z-10 border-neutral-200 flex flex-col justify-between">
+    <aside className="hidden  relative w-[243px] h-full bg-neutral-50 border-r z-10 border-neutral-200 md:flex flex-col justify-between">
       <section className="w-full  overflow-hidden h-full bg-neutral-50 flex flex-col gap-4 p-4">
         <DashboardButton label="New file">
           <Image src={plus} alt="sparkles-icon" />
