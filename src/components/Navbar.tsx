@@ -12,16 +12,22 @@ import MaxWidthWrapper from "./MaxWidthWrapper";
 interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = ({}) => {
-  const [navbar, toggleNav] = useState(false);
+  const [navbar, setNavbar] = useState(false);
   const size = useWindowSize();
 
   useEffect(() => {
     if (size.width && size.width > 768) {
-      toggleNav(true);
+      setNavbar(true);
     } else if (size.width && size.width < 768) {
-      toggleNav(false);
+      setNavbar(false);
     }
   }, [size]);
+
+  const closeNav = () => {
+    if (size.width && size.width < 768) {
+      setNavbar(false);
+    }
+  };
   return (
     <MaxWidthWrapper>
       <header
@@ -29,28 +35,34 @@ const Navbar: FC<NavbarProps> = ({}) => {
           navbar && "bg-white md:bg-transparent md:h-auto h-72 "
         }`}
       >
-        <Link href="/">
+        <Link onClick={closeNav} href="/">
           <Image src={logo} alt="logo" className="w-8 md:w-auto" />
         </Link>
 
         <nav className="flex flex-col relative items-start gap-2 justify-end md:gap-10">
           <Image
-            onClick={() => toggleNav(!navbar)}
+            onClick={() => {
+              setNavbar(!navbar);
+            }}
             className="md:hidden "
             src={burger}
             alt="logo"
           />
           {navbar && (
             <ul className="flex flex-col gap-4 items-end w-[120px] md:w-auto absolute top-12  right-0 md:relative md:top-0 md:flex-row md:items-center md:gap-10">
-              <Link className="font-bold" href="/pricing">
+              <Link onClick={closeNav} className="font-bold" href="/pricing">
                 {" "}
                 Pricing
               </Link>
-              <Link className="font-bold" href="/">
+              <Link onClick={closeNav} className="font-bold" href="/dashboard">
                 {" "}
                 Sign in
               </Link>
-              <Link className={cn(buttonVariants(), "")} href="/">
+              <Link
+                onClick={closeNav}
+                className={cn(buttonVariants(), "")}
+                href="/dashboard"
+              >
                 {" "}
                 Get started
               </Link>

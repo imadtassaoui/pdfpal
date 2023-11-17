@@ -23,3 +23,10 @@ p {
   font-weight: 400;
   line-height: normal;
 }
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
