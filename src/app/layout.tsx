@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
 import "./globals.css";
+import AuthProvider from "@/components/AuthProvider";
 
 const satoshi = localFont({ src: "../fonts/Satoshi-Variable.ttf" });
 
@@ -18,10 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="light">
-      <body className={cn("bg-neutral-50 scroll-smooth", satoshi.className)}>
-        <Toaster richColors />
-        {children}
-      </body>
+      <AuthProvider>
+        <body className={cn("bg-neutral-50 scroll-smooth", satoshi.className)}>
+          <Toaster richColors />
+          {children}
+        </body>
+      </AuthProvider>
     </html>
   );
 }

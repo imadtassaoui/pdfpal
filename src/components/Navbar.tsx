@@ -54,14 +54,14 @@ const Navbar: FC<NavbarProps> = ({}) => {
                 {" "}
                 Pricing
               </Link>
-              <Link onClick={closeNav} className="font-bold" href="/dashboard">
+              <Link onClick={closeNav} className="font-bold" href="/login">
                 {" "}
                 Sign in
               </Link>
               <Link
                 onClick={closeNav}
                 className={cn(buttonVariants(), "")}
-                href="/dashboard"
+                href="/register"
               >
                 {" "}
                 Get started
