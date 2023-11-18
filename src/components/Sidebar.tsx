@@ -2,25 +2,26 @@
 import Image from "next/image";
 import { FC } from "react";
 
-import sparkles from "@/assets/icons/sparkles.svg";
-import plus from "@/assets/icons/plus.svg";
-import user from "@/assets/user.png";
 import logout from "@/assets/icons/log-out.svg";
+import plus from "@/assets/icons/plus.svg";
+import sparkles from "@/assets/icons/sparkles.svg";
+import user from "@/assets/user.png";
 
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import DashboardButton from "./ui/DashboardButton";
 import FileCard from "./ui/FileCard";
-import Link from "next/link";
-import { toast } from "sonner";
-import { signOut, useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 
 interface SidebarProps {}
 
 const Sidebar: FC<SidebarProps> = ({}) => {
+  const router = useRouter();
   const handleLogout = async () => {
     try {
-      await signOut({ callbackUrl: "/" });
+      await signOut({ redirect: false });
       toast.success("Logged out successfully");
+      router.push("/");
     } catch (error) {
       toast.error("There's a problemm logging out");
     }

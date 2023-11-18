@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { cn } from "@/lib/utils";
 import { FC } from "react";
 
 interface DashboardButtonProps {
@@ -13,7 +13,12 @@ const DashboardButton: FC<DashboardButtonProps> = ({
   label,
 }) => {
   return (
-    <button className="p-3 w-full hover:bg-neutral-100 font-medium flex gap-2 rounded-xl items-center cursor-pointer">
+    <button
+      className={cn(
+        "p-3 w-full hover:bg-neutral-100 font-medium flex gap-2 rounded-xl items-center cursor-pointer",
+        className
+      )}
+    >
       {children}
       <label>{label}</label>
     </button>

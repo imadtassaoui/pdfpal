@@ -1,14 +1,14 @@
 "use client";
 import Button from "@/components/ui/Button";
 import Image from "next/image";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
 import logo from "@/assets/icons/icon.svg";
 import { Input } from "@/components/ui/Input";
-import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { toast } from "sonner";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "sonner";
 
 interface loginProps {}
 
@@ -19,18 +19,34 @@ const Login: FC<loginProps> = ({}) => {
   });
   const callBackUrl = useSearchParams().get("callbackUrl") || "/dashboard";
   const router = useRouter();
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await signIn("credentials", {
-      redirect: false,
-      email: form.email,
-      password: form.password,
+
+    const promise = new Promise(async (resolve, reject) => {
+      try {
+        const res = await signIn("credentials", {
+          redirect: false,
+          email: form.email,
+          password: form.password,
+        });
+
+        if (res?.ok) {
+          router.push(callBackUrl);
+          resolve("Logged in successfully");
+        } else {
+          reject("Invalid credentials");
+        }
+      } catch (error) {
+        console.error("An error occurred during login:", error);
+        reject("An error occurred during login");
+      }
     });
-    if (res?.ok) {
-      toast.success("Logged in successfully");
-      router.push(callBackUrl);
-    } else toast.error("Invalid credentials");
+
+    toast.promise(promise, {
+      loading: "Loading...",
+      success: (data: any) => data,
+      error: (error) => error,
+    });
   };
 
   return (
@@ -50,6 +66,7 @@ const Login: FC<loginProps> = ({}) => {
           <div className="w-full flex flex-col gap-1">
             <label className="font-bold">Email</label>
             <Input
+              autoComplete="email"
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               className="w-full"
               type="email"
@@ -59,6 +76,7 @@ const Login: FC<loginProps> = ({}) => {
           <div className="w-full flex flex-col gap-1">
             <label className="font-bold">Password</label>
             <Input
+              autoComplete="password"
               onChange={(e) => setForm({ ...form, password: e.target.value })}
               className="w-full"
               type="password"
