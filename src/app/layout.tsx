@@ -1,9 +1,8 @@
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Toaster } from "sonner";
 import "./globals.css";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
 
 const satoshi = localFont({ src: "../fonts/Satoshi-Variable.ttf" });
 
@@ -20,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="light">
       <body className={cn("bg-neutral-50 scroll-smooth", satoshi.className)}>
+        <Toaster richColors />
         {children}
       </body>
     </html>

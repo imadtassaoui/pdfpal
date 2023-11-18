@@ -12,7 +12,7 @@ import MaxWidthWrapper from "./MaxWidthWrapper";
 interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = ({}) => {
-  const [navbar, setNavbar] = useState(false);
+  const [navbar, setNavbar] = useState(true);
   const size = useWindowSize();
 
   useEffect(() => {

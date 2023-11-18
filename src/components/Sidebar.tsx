@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { FC } from "react";
 
@@ -8,10 +9,22 @@ import logout from "@/assets/icons/log-out.svg";
 
 import DashboardButton from "./ui/DashboardButton";
 import FileCard from "./ui/FileCard";
+import Link from "next/link";
+import { toast } from "sonner";
+import { signOut } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 interface SidebarProps {}
 
 const Sidebar: FC<SidebarProps> = ({}) => {
+  const handleLogout = async () => {
+    try {
+      await signOut({ callbackUrl: "http://localhost:3000/" });
+      toast.success("Logged out successfully");
+    } catch (error) {
+      toast.error("There's a problemm logging out");
+    }
+  };
   return (
     <aside className="hidden  relative w-[243px] h-full bg-neutral-50 border-r z-10 border-neutral-200 md:flex flex-col justify-between">
       <section className="w-full  overflow-hidden h-full bg-neutral-50 flex flex-col gap-4 p-4">
@@ -68,7 +81,7 @@ const Sidebar: FC<SidebarProps> = ({}) => {
             <Image src={user} alt="user" width={24} height={24} />
             <label>Imad Tassaoui</label>
           </div>
-          <Image src={logout} alt="logout-icon" />
+          <Image onClick={handleLogout} src={logout} alt="logout-icon" />
         </button>
       </section>
       {/* <div className="bg-black w-screen h-screen absolute top-0 left-0 -z-10" /> */}
