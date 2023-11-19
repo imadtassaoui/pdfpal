@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import Image, { ImageLoaderProps } from "next/image";
 import { FC } from "react";
 
 import logout from "@/assets/icons/log-out.svg";
@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import DashboardButton from "./ui/DashboardButton";
 import FileCard from "./ui/FileCard";
+import { Session } from "next-auth";
 
 interface SidebarProps {}
 
@@ -27,6 +28,13 @@ const Sidebar: FC<SidebarProps> = ({}) => {
     }
   };
   const { data: session } = useSession();
+
+  const userImage = (session as Session)?.user?.image || user;
+
+  const customLoader = ({ src, width, quality }: ImageLoaderProps) => {
+    return `${src}?w=${width}&q=${quality || 75}`
+  };
+
   return (
     <aside className="hidden  relative w-[243px] h-full bg-neutral-50 border-r z-10 border-neutral-200 md:flex flex-col justify-between">
       <section className="w-full  overflow-hidden h-full bg-neutral-50 flex flex-col gap-4 p-4">
@@ -79,9 +87,9 @@ const Sidebar: FC<SidebarProps> = ({}) => {
           <Image src={sparkles} alt="sparkles-icon" />
         </DashboardButton>
         <button className="p-3 w-full hover:bg-neutral-100 font-medium flex gap-2 rounded-xl items-center justify-between cursor-pointer">
-          <div className="flex gap-2">
-            <Image src={user} alt="user" width={24} height={24} />
-            <label>{session?.user?.name}</label>
+          <div className="flex gap-2 w-full">
+            <Image className="rounded-full" loader={customLoader} src={userImage} alt="user" width={24} height={24} />
+            <label className="truncate">{session?.user?.name}</label>
           </div>
           <Image onClick={handleLogout} src={logout} alt="logout-icon" />
         </button>

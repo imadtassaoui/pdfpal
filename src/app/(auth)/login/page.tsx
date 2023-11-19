@@ -19,6 +19,7 @@ const Login: FC<loginProps> = ({}) => {
   });
   const callBackUrl = useSearchParams().get("callbackUrl") || "/dashboard";
   const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -36,6 +37,32 @@ const Login: FC<loginProps> = ({}) => {
         } else {
           reject("Invalid credentials");
         }
+      } catch (error) {
+        console.error("An error occurred during login:", error);
+        reject("An error occurred during login");
+      }
+    });
+
+    toast.promise(promise, {
+      loading: "Loading...",
+      success: (data: any) => data,
+      error: (error) => error,
+    });
+  };
+
+  const handleGoogleLogin = async () => {
+
+    const promise = new Promise(async (resolve, reject) => {
+      try {
+        const res = await signIn("google", {
+          redirect: false,
+        });
+
+        if (res?.ok) {
+          router.push(callBackUrl);
+          resolve("Logged in successfully");
+        }
+        
       } catch (error) {
         console.error("An error occurred during login:", error);
         reject("An error occurred during login");
@@ -89,8 +116,9 @@ const Login: FC<loginProps> = ({}) => {
             Login
           </Button>
           <Button
+            type="button"
             variant="longRed"
-            className="w-full bg-neutral-100 text-black"
+            className="w-full bg-neutral-100 text-black" onClick={handleGoogleLogin}
           >
             Continue with Google
           </Button>
