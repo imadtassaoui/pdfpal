@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -8,14 +9,19 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const options: NextAuthOptions = {
-  // adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma),
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
+  debug: true,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID as string,
       clientSecret: process.env.GOOGLE_SECRET as string,
     }),
     CredentialsProvider({
-      name: "Credentials",
+      name: "credentials",
       credentials: {
         email: {
           label: "Email",
@@ -29,24 +35,35 @@ export const options: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        //db users
-        const user = {
-          id: "1337",
-          email: "imadetassaoui@gmail.com",
-          passwprd: "123456",
-        };
+        if (credentials) {
+          if (!credentials.email || !credentials.password) {
+            return null;
+          }
 
-        if (
-          credentials?.email === user.email &&
-          credentials?.password === user.passwprd
-        ) {
+          const user = await prisma.user.findUnique({
+            where: {
+              email: credentials.email,
+            },
+          });
+
+          if (!user) {
+            return null;
+          }
+
+          const isValid = await bcrypt.compare(
+            credentials.password,
+            user.password
+          );
+
+          if (!isValid) {
+            return null;
+          }
           return user;
-        } else {
-          return null;
         }
       },
     }),
   ],
+
   pages: {
     signIn: "/login",
   },
